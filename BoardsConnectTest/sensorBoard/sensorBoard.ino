@@ -1,4 +1,7 @@
 #include <SoftwareSerial.h>
+#include <Ultrasonic.h>
+
+Ultrasonic ultrasonic(12, 13);
 
 const int LeftSensorPin = A0;
 const int RightSensorPin = A1;
@@ -13,10 +16,18 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  int LeftSensorValue = analogRead(LeftSensorPin);
-  int RightSensorValue = analogRead(RightSensorPin);
-  softSerial.println(LeftSensorValue);
+  int Left = analogRead(LeftSensorPin);
+  int Right = analogRead(RightSensorPin);
+  int Distance = ultrasonic.read();
+  String color = "White";
+
+  softSerial.print("L:"); softSerial.print(Left); softSerial.print(";");
+  softSerial.print("R:"); softSerial.print(Right); softSerial.print(";");
+  softSerial.print("D:"); softSerial.print(Distance); softSerial.print(";");
+  softSerial.print("C:"); softSerial.print(color); softSerial.print(";");
+  softSerial.println();
   
+  /*
   Serial.print("Left: ");
   // Serial.println(LeftSensorValue);
   if (LeftSensorValue > 600)
@@ -28,6 +39,7 @@ void loop() {
     Serial.println("Black");
   else
     Serial.println("White");
-  
+  */
+
   delay(1000);
 }
