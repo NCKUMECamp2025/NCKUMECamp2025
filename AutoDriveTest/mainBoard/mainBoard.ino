@@ -5,8 +5,8 @@ int L, R, D;
 String C;
 
 // 設定值
-int speed = 125;
-int black = 600;
+int speed = 150;
+int black = 500;
 
 // SoftwareSerial softSerial(2, 3); // RX, TX
 
@@ -53,14 +53,15 @@ void loop() {
     */
   }
 
+  
   if (L > black) 
   {
-    turnRight2(speed);
+    turnRight3("+", speed);
     delay(100);
   }
   else if (R > black) 
   {
-    turnLeft2(speed);
+    turnLeft3("+", speed);
     delay(100);
   }
   else 
@@ -68,7 +69,8 @@ void loop() {
     forward(speed);
     delay(100);
   }
-
+  
+ // forward(speed);
   // delay(1000);
 }
 

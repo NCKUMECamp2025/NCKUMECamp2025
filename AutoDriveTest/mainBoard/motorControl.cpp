@@ -1,245 +1,221 @@
 #include "motorControl.h"
 #include <Arduino.h>
 
-// 直走
-void forward(int motorspeed)
+void LF(String dir, int speed)
 {
-    //左後輪正轉
-    digitalWrite(LEFT1, HIGH);
-    digitalWrite(LEFT2, LOW);
-    analogWrite(LEFT_PWM, motorspeed);
-    //右後輪正轉
-    digitalWrite(RIGHT1, HIGH);
-    digitalWrite (RIGHT2, LOW);
-    analogWrite(RIGHT_PWM, motorspeed);
-
-    //左前輪正轉
+  if (dir == "+")
+  {
     digitalWrite(LEFT3, HIGH);
     digitalWrite(LEFT4, LOW);
-    analogWrite(LEFT2_PWM, motorspeed);
-    //右前輪正轉
+    analogWrite(LEFT2_PWM, speed);
+  }
+  else if (dir == "-")
+  {
+    digitalWrite(LEFT3, LOW);
+    digitalWrite(LEFT4, HIGH);
+    analogWrite(LEFT2_PWM, speed);
+  }
+  else
+  {
+    digitalWrite(LEFT3, LOW);
+    digitalWrite(LEFT4, LOW);
+  }
+}
+
+void RF(String dir, int speed)
+{
+  if (dir == "+")
+  {
     digitalWrite(RIGHT3, HIGH);
-    digitalWrite (RIGHT4, LOW);
-    analogWrite(RIGHT2_PWM, motorspeed);
+    digitalWrite(RIGHT4, LOW);
+    analogWrite(RIGHT2_PWM, speed);
+    //analogWrite(RIGHT2_PWM, motorspeed*0.6);
+  }
+  else if (dir == "-")
+  {
+    digitalWrite(RIGHT3, LOW);
+    digitalWrite(RIGHT4, HIGH);
+    analogWrite(RIGHT2_PWM, speed);
+    //analogWrite(RIGHT2_PWM, motorspeed*0.6);
+  }
+  else
+  {
+    digitalWrite(RIGHT3, LOW);
+    digitalWrite(RIGHT4, LOW);
+  }
+}
+
+void LR(String dir, int speed)
+{
+  if (dir == "+")
+  {
+    digitalWrite(LEFT1, HIGH);
+    digitalWrite(LEFT2, LOW);
+    analogWrite(LEFT_PWM, speed);
+  }
+  else if (dir == "-")
+  {
+    digitalWrite(LEFT1, LOW);
+    digitalWrite(LEFT2, HIGH);
+    analogWrite(LEFT_PWM, speed);
+  }
+  else
+  {
+    digitalWrite(LEFT1, LOW);
+    digitalWrite(LEFT2, LOW);
+  }
+}
+
+void RR(String dir, int speed)
+{
+  if (dir == "+")
+  {
+    digitalWrite(RIGHT1, HIGH);
+    digitalWrite(RIGHT2, LOW);
+    analogWrite(RIGHT_PWM, speed);
+  }
+  else if (dir == "-")
+  {
+    digitalWrite(RIGHT1, LOW);
+    digitalWrite(RIGHT2, HIGH);
+    analogWrite(RIGHT_PWM, speed);
+  }
+  else
+  {
+    digitalWrite(RIGHT1, LOW);
+    digitalWrite(RIGHT2, LOW);
+  }
+}
+
+// 直走
+void forward(int speed)
+{
+  //左後輪正轉
+  LR("+", speed);
+  //右後輪正轉
+  RR("+", speed);
+  //左前輪正轉
+  LF("+", speed);
+  //右前輪正轉
+  RF("+", speed);
 }
 
 // 後退
-void backward(int motorspeed)
+void backward(int speed)
 {
-  //左後輪
-  digitalWrite(LEFT1, LOW);
-  digitalWrite(LEFT2, HIGH);
-  analogWrite(LEFT_PWM, motorspeed);
-  //右後輪
-  digitalWrite(RIGHT1, LOW);
-  digitalWrite (RIGHT2, HIGH);
-  analogWrite(RIGHT_PWM, motorspeed);
-
-  //左前輪
-  digitalWrite(LEFT3, LOW);
-  digitalWrite(LEFT4, HIGH);
-  analogWrite(LEFT2_PWM, motorspeed);
-  //右前輪
-  digitalWrite(RIGHT3, LOW);
-  digitalWrite (RIGHT4, HIGH);
-  analogWrite(RIGHT2_PWM, motorspeed);
+  //左後輪反轉
+  LR("-", speed);
+  //右後輪反轉
+  RR("-", speed);
+  //左前輪反轉
+  LF("-", speed);
+  //右前輪反轉
+  RF("-", speed);
 }
 
 // 左平移(左前、右後輪往後,右前、左後輪往前)
-void turnLeft1(int motorspeed)
+void turnLeft1(int speed)
 {
-  //左後輪
-  digitalWrite(LEFT1, HIGH);
-  digitalWrite(LEFT2, LOW);
-  analogWrite(LEFT_PWM, motorspeed);
-  //右後輪
-  digitalWrite(RIGHT1, LOW);
-  digitalWrite (RIGHT2, HIGH);
-  analogWrite(RIGHT_PWM, motorspeed);
-
-  //左前輪
-  digitalWrite(LEFT3, LOW);
-  digitalWrite(LEFT4, HIGH);
-  analogWrite(LEFT2_PWM, motorspeed);
-  //右前輪
-  digitalWrite(RIGHT3, HIGH);
-  digitalWrite (RIGHT4, LOW);
-  analogWrite(RIGHT2_PWM, motorspeed);
+  //左後輪正轉
+  LR("+", speed);
+  //右後輪反轉
+  RR("-", speed);
+  //左前輪反轉
+  LF("-", speed);
+  //右前輪正轉
+  RF("+", speed);
 }
 
 // 右平移(左前、右後輪往前,右前、左後輪往後)
-void turnRight1(int motorspeed)
+void turnRight1(int speed)
 {
-  //左後輪
-  digitalWrite(LEFT1, LOW);
-  digitalWrite(LEFT2, HIGH);
-  analogWrite(LEFT_PWM, motorspeed);
-  //右後輪
-  digitalWrite(RIGHT1, HIGH);
-  digitalWrite (RIGHT2, LOW);
-  analogWrite(RIGHT_PWM, motorspeed);
-
-  //左前輪
-  digitalWrite(LEFT3, HIGH);
-  digitalWrite(LEFT4, LOW);
-  analogWrite(LEFT2_PWM, motorspeed);
-  //右前輪
-  digitalWrite(RIGHT3, LOW);
-  digitalWrite (RIGHT4, HIGH);
-  analogWrite(RIGHT2_PWM, motorspeed);
+  //左後輪反轉
+  LR("-", speed);
+  //右後輪正轉
+  RR("+", speed);
+  //左前輪正轉
+  LF("+", speed);
+  //右前輪反轉
+  RF("-", speed);
 }
 
 // 左前斜移(左前、右後輪不動,右前、左後輪往前)
-void turnLeft2(int motorspeed)
+void turnLeft2(int speed)
 {
-  //左後輪
-  digitalWrite(LEFT1, HIGH);
-  digitalWrite(LEFT2, LOW);
-  analogWrite(LEFT_PWM, motorspeed);
-  //右後輪
-  analogWrite(RIGHT_PWM, 0);
-
-  //左前輪
-  analogWrite(LEFT2_PWM, 0);
-  //右前輪
-  digitalWrite(RIGHT3, HIGH);
-  digitalWrite (RIGHT4, LOW);
-  analogWrite(RIGHT2_PWM, motorspeed);
+  //左後輪正轉
+  LR("+", speed);
+  //右後輪不動
+  RR("", 0);
+  //左前輪不動
+  LF("", 0);
+  //右前輪正轉
+  RF("+", speed);
 }
 
 // 右前斜移(左前、右後輪往前,右前、左後輪不動)
-void turnRight2(int motorspeed)
+void turnRight2(int speed)
 {
 
-  //左後輪
-  analogWrite(LEFT_PWM, 0);
-  //右後輪
-  digitalWrite(RIGHT1, HIGH);
-  digitalWrite (RIGHT2, LOW);
-  analogWrite(RIGHT_PWM, motorspeed);
-
-  //左前輪
-  digitalWrite(LEFT3, HIGH);
-  digitalWrite(LEFT4, LOW);
-  analogWrite(LEFT2_PWM, motorspeed);
-  //右前輪
-  analogWrite(RIGHT2_PWM, 0);
+  //左後輪不動
+  LR("", 0);
+  //右後輪正轉
+  RR("+", speed);
+  //左前輪正轉
+  LF("+", speed);
+  //右前輪不動
+  RF("", 0);
 }
 
-// 左前迴旋(左前、左後輪往後,右前、右後輪不動)
-void turnLeft3(int motorspeed)
+// 左迴旋 前(左前、左後輪不動,右前、右後輪往前) 後(左前、左後輪不動,右前、右後輪往後)
+void turnLeft3(String dir, int speed)
 {
-  //左後輪
-  digitalWrite(LEFT1, LOW);
-  digitalWrite(LEFT2, HIGH);
-  analogWrite(LEFT_PWM, motorspeed);
-  //右後輪
-  analogWrite(RIGHT_PWM, 0);
-
-  //左前輪
-  digitalWrite(LEFT3, LOW);
-  digitalWrite(LEFT4, HIGH);
-  analogWrite(LEFT2_PWM, motorspeed);
-  //右前輪
-  analogWrite(RIGHT2_PWM, 0);
+  //左後輪不動
+  LR("", 0);
+  //右後輪轉
+  RR(dir, speed);
+  //左前輪不動
+  LF("", 0);
+  //右前輪轉
+  RF(dir, speed);
 }
 
-// 右前迴旋(左前、左後輪往前,右前、右後輪不動)
-void turnRight3(int motorspeed)
+// 右迴旋 前(左前、左後輪往前,右前、右後輪不動) 後(左前、左後輪往後,右前、右後輪不動) 
+void turnRight3(String dir, int speed)
 {
-  //左後輪
-  digitalWrite(LEFT1, HIGH);
-  digitalWrite(LEFT2, LOW);
-  analogWrite(LEFT_PWM, motorspeed);
-  //右後輪
-  analogWrite(RIGHT_PWM, 0);
-
-  //左前輪
-  digitalWrite(LEFT3, HIGH);
-  digitalWrite(LEFT4, LOW);
-  analogWrite(LEFT2_PWM, motorspeed);
-  //右前輪
-  analogWrite(RIGHT2_PWM, 0);
-}
-
-// 左後迴旋(左前輪往後,右前輪往前,左後、右後輪不動)
-void turnLeft4(int motorspeed)
-{
-  //左後輪
-  analogWrite(LEFT_PWM, 0);
-  //右後輪
-  analogWrite(RIGHT_PWM, 0);
-
-  //左前輪
-  digitalWrite(LEFT3, LOW);
-  digitalWrite(LEFT4, HIGH);
-  analogWrite(LEFT2_PWM, motorspeed);
-  //右前輪
-  digitalWrite(RIGHT3, HIGH);
-  digitalWrite (RIGHT4, LOW);
-  analogWrite(RIGHT2_PWM, motorspeed);
-}
-
-// 右後迴旋(左前輪往前,右前輪往後,左後、右後輪不動)
-void turnRight4(int motorspeed)
-{
-  //左後輪
-  analogWrite(LEFT_PWM, 0);
-  //右後輪
-  analogWrite(RIGHT_PWM, 0);
-
-  //左前輪
-  digitalWrite(LEFT3, HIGH);
-  digitalWrite(LEFT4, LOW);
-  analogWrite(LEFT2_PWM, motorspeed);
-  //右前輪
-  digitalWrite(RIGHT3, LOW);
-  digitalWrite (RIGHT4, HIGH);
-  analogWrite(RIGHT2_PWM, motorspeed);
+  //左後輪轉
+  LR(dir, speed);
+  //右後輪不動
+  RR("", 0);
+  //左前輪轉
+  LF(dir, speed);
+  //右前輪不動
+  RF("", 0);
 }
 
 // 逆時針迴旋(左前、左後輪往後,右前、右後輪往前)
-void cycleLeft(int motorspeed)
+void cycleLeft(int speed)
 {
-  //左後輪
-  digitalWrite(LEFT1, LOW);
-  digitalWrite(LEFT2, HIGH);
-  analogWrite(LEFT_PWM, motorspeed);
-  //右後輪
-  digitalWrite(RIGHT1, HIGH);
-  digitalWrite (RIGHT2, LOW);
-  analogWrite(RIGHT_PWM, motorspeed);
-
-  //左前輪
-  digitalWrite(LEFT3, LOW);
-  digitalWrite(LEFT4, HIGH);
-  analogWrite(LEFT2_PWM, motorspeed);
-  //右前輪
-  digitalWrite(RIGHT3, HIGH);
-  digitalWrite (RIGHT4, LOW);
-  analogWrite(RIGHT2_PWM, motorspeed);
+  //左後輪反轉
+  LR("-", speed);
+  //右後輪正轉
+  RR("+", speed);
+  //左前輪反轉
+  LF("-", speed);
+  //右前輪正轉
+  RF("+", speed);
 }
 
 // 順時針迴旋(左前、左後輪往前,右前、右後輪往後)
-void cycleRight(int motorspeed)
+void cycleRight(int speed)
 {
-  //左後輪
-  digitalWrite(LEFT1, HIGH);
-  digitalWrite(LEFT2, LOW);
-  analogWrite(LEFT_PWM, motorspeed);
-  //右後輪
-  digitalWrite(RIGHT1, LOW);
-  digitalWrite (RIGHT2, HIGH);
-  analogWrite(RIGHT_PWM, motorspeed);
-
-  //左前輪
-  digitalWrite(LEFT3, HIGH);
-  digitalWrite(LEFT4, LOW);
-  analogWrite(LEFT2_PWM, motorspeed);
-  //右前輪
-  digitalWrite(RIGHT3, LOW);
-  digitalWrite (RIGHT4, HIGH);
-  analogWrite(RIGHT2_PWM, motorspeed);
+  //左後輪正轉
+  LR("+", speed);
+  //右後輪反轉
+  RR("-", speed);
+  //左前輪正轉
+  LF("+", speed);
+  //右前輪反轉
+  RF("-", speed);
 }
 
 // 停車
