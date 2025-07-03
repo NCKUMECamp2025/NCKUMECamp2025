@@ -8,29 +8,11 @@ String C;
 int speed = 150;
 int black = 500;
 
-// SoftwareSerial softSerial(2, 3); // RX, TX
-
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  // softSerial.begin(9600);
   
-  /*
   //設定每一個PIN的模式
-  pinMode(LEFT1, OUTPUT);
-  pinMode(LEFT2, OUTPUT);
-  pinMode(LEFT_PWM, OUTPUT);
-  pinMode(RIGHT1, OUTPUT);
-  pinMode(RIGHT2, OUTPUT);
-  pinMode(RIGHT_PWM, OUTPUT);
-  
-  pinMode(LEFT3, OUTPUT);
-  pinMode(LEFT4, OUTPUT);
-  pinMode(LEFT2_PWM, OUTPUT);
-  pinMode(RIGHT3, OUTPUT);
-  pinMode(RIGHT4, OUTPUT);
-  pinMode(RIGHT2_PWM, OUTPUT);
-  */
   set();
 }
 

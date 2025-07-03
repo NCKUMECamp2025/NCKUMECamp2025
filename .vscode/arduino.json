@@ -1,5 +1,5 @@
 {
     "board": "arduino:avr:uno",
-    "sketch": "AutoDriveTest\\mainBoard\\mainBoard.ino",
-    "port": "COM7"
+    "sketch": "AutoDriveTest\\sensorBoard\\sensorBoard.ino",
+    "port": "COM5"
 }

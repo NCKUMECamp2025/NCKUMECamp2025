@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #ifndef MOTOR_CONTROL
 #define MOTOR_CONTROL
 
@@ -19,16 +21,22 @@
 #define LEFT4 7
 #define LEFT2_PWM 6
 
-void forward(int motorspeed); //直走
-void backward(int motorspeed); //後退
-void turnLeft1(int motorspeed); //左平移
-void turnRight1(int motorspeed); //右平移
-void turnLeft2(int motorspeed); //左前移動
-void turnRight2(int motorspeed); //右前移動
-void turnLeft3(int motorspeed); //左前迴旋
-void turnRight3(int motorspeed); //右前迴旋
-void turnLeft4(int motorspeed); //左後迴旋
-void turnRight4(int motorspeed); //右後迴旋
-void cycleLeft(int motorspeed); //逆時針迴旋
-void cycleRight(int motorspeed); //順時針迴旋
+void LF(String, int);
+void RF(String, int);
+void LR(String, int);
+void RR(String, int);
+
+void forward(int); //直走
+void backward(int); //後退
+void turnLeft1(int); //左平移
+void turnRight1(int); //右平移
+void turnLeft2(int); //左前移動
+void turnRight2(int); //右前移動
+void turnLeft3(String, int); //左迴旋
+void turnRight3(String, int); //右迴旋
+void cycleLeft(int); //逆時針迴旋
+void cycleRight(int); //順時針迴旋
+void stopMotor();
+
+void set();
 #endif
