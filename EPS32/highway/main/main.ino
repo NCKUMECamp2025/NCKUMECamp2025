@@ -11,6 +11,7 @@ Adafruit_TCS34725 tcs = Adafruit_TCS34725(
 uint16_t speed = 150;
 uint16_t black = 500; uint16_t yellow = 300;
 uint16_t pos = 1; // 0->left 1->mid 2->right
+uint16_t ot = 15; // overtake distance :)
 
 void setup()
 {
@@ -35,7 +36,7 @@ void loop()
     R /= C; G /= C; B /= C; // Not used here
     
     // Motor control
-    if (Distance < 15)
+    if (Distance < ot)
     {
         if (pos++ == 0)
         {
