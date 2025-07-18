@@ -49,4 +49,9 @@ void loop()
         forward(speed);
         delay(100);
     }
+
+    Serial.print("Left:"); Serial.print(Left); Serial.print(";");
+    Serial.print("Right:"); Serial.print(Right); Serial.print(";");
+    Serial.print("Dis:"); Serial.print(Distance); Serial.print(";");
+    Serial.print("RGB:"); Serial.print(R); Serial.print(G); Serial.print(B); Serail.println(";");
 }
